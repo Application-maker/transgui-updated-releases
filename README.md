@@ -1,2 +1,2 @@
-# transgui-updated-releases
-Building script + Releases for transgui
+# Updated releases for transgui
+Building script and prebuilt releases for "transmission-remote-gui/transgui"
