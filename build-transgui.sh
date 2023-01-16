@@ -7,8 +7,8 @@ fi
 git clone https://github.com/transmission-remote-gui/transgui.git
 cd ./transgui/setup/unix || exit
 ./build.sh
-cd .. || exit
-cd .. || exit
+
+cd ../../
 
 VERSION="$(cat "./VERSION.txt")"
 echo "$VERSION"
