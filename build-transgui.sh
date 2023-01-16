@@ -1,4 +1,5 @@
 counter=0
+now=$(date +%F)
 
 if [ -d "./transgui" ]; then
   rm -rf ./transgui
@@ -10,8 +11,7 @@ cd ./transgui/setup/unix || exit
 
 cd ../../
 
-VERSION="$(cat "./VERSION.txt")"
-echo "$VERSION"
+VERSION=$(cat VERSION.txt)
 
 filenames=("$( ls ./Release )")
 
@@ -21,4 +21,4 @@ for i in "${filenames[@]}" ; do
   echo "$i"
 done
 
-gh release create "$VERSION" -t "$VERSION" --repo Max-Gouliaev/transgui-updated-releases -n "" $filepaths
+gh release create "$VERSION" -t "$now" --repo Max-Gouliaev/transgui-updated-releases -n "" $filepaths
