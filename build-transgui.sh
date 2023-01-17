@@ -1,3 +1,4 @@
+#!/bin/bash
 counter=0
 now=$(date +%F)
 
@@ -21,4 +22,4 @@ for i in "${filenames[@]}" ; do
   echo "$i"
 done
 
-gh release create "$VERSION" -t "$now" --repo Max-Gouliaev/transgui-updated-releases -n "" $filepaths
+gh release create "$VERSION" -t "$now" --repo Max-Gouliaev/transgui-updated-releases -n "" "$filepaths"
