@@ -1,3 +1,4 @@
+#!/bin/bash
 now=$(date +%F)
 
 if [ -d "./transgui" ]; then
