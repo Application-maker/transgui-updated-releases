@@ -1,13 +1,16 @@
 #!/bin/bash
 now=$(date +%F)
 
-# Update the reposirory
-if [ -d "./transgui" ]; then
-  rm -rf ./transgui
-fi
+# Check the arguments
+if [ ! "$1" = --no-clone ] && [ ! "$1" = -nc ] && [ ! "$1" = --no-update ] && [ ! "$1" = -nu ]; then
+  # Remove old reposirory files
+  if [ -d "./transgui" ]; then
+    rm -rf ./transgui
+  fi
 
-# Clone the repository
-git clone https://github.com/transmission-remote-gui/transgui.git
+  # Clone the repository
+  git clone https://github.com/transmission-remote-gui/transgui.git
+fi
 
 # Build the application
 cd ./transgui/setup/unix || exit
