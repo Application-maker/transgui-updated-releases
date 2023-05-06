@@ -18,7 +18,7 @@ fi
 # Check the lazarus default folder
 if [ ! -d "/usr/lib/lazarus/default" ]; then
   if [ ! -d "/usr/lib/lazarus/" ]; then 
-    printf "%s""$LRED""Lazarus default folder not found!\n"
+    printf "%s""$LRED""Lazarus default folder is not found!\n"
     printf "%s""$LRED""Check if you have installed Lazarus properly!\n"
     exit
   else
