@@ -2,4 +2,4 @@
  Building script and prebuilt releases for "transmission-remote-gui/transgui"
 #
 #
-# DON'T WORRY ABOUT COMMITS BEHIND! IT'S ALWAYS UP TO DATE
+# NOW NOT A FORK!
