@@ -1,4 +1,4 @@
-# Updated releases for transgui(WIP)(ONLY FOR LINUX YET)
+# Updated releases for transgui(WIP)(NO MAC SUPPORT YET)
  Building script and prebuilt releases for "transmission-remote-gui/transgui"
 #
 #
