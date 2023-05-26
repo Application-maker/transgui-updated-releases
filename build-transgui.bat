@@ -52,9 +52,9 @@ IF NOT %1%==--no-clone (
    IF NOT %1%==-nc (
       IF NOT %1%==--no-update (
          IF NOT %1%==-nu (
-            IF exist .\transgui\ (
+            IF exist transgui\ (
                :: Remove old repository files
-               rm -rf .\transgui
+               rm -rf transgui
                )
             :: Clone the repository
             git clone https://github.com/transmission-remote-gui/transgui.git
@@ -64,19 +64,20 @@ IF NOT %1%==--no-clone (
    )
 
 
-cd .\transgui\setup\win_amd64
+cd transgui\setup\win_amd64
 :: Instead of checking dependencies using this script, we check using author's script
-.\install_deps.bat
+install_deps.bat
 
-.\make_setup.bat
-.\make_zipdist.bat
+make_setup.bat
+make_zipdist.bat
 
-cd ..\..
+cd ..
+cd ..
 
 :: Install github cli
 choco install gh
 
-set /p VERSION=< .\VERSION.txt
+set /p VERSION=< VERSION.txt
 
 :: Release the build
-gh release create "%VERSION%" -t "%now%" --repo Max-Gouliaev/transgui-updated-releases -n "" .\Release\*
+gh release create "%VERSION%" -t "%now%" --repo Max-Gouliaev/transgui-updated-releases -n "" Release\*
