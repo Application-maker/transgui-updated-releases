@@ -7,7 +7,7 @@ LGREEN='\033[1;32m'
 
 
 # Check if the packages are installed
-if [ ! -x "$(command -v git)" ] || [ ! -x "$(command -v make)" ] || [ ! -x "$(command -v tar)" ] || [ ! -x "$(command -v lazbuild)" ] || [ ! -x "$(command -v lazarus)" ] || [ ! -x "$(command -v gh)" ]; then
+if [ ! -x "$(command -v git)" ] || [ ! -x "$(command -v make)" ] || [ ! -x "$(command -v tar)" ] || [ ! -x "$(command -v lazbuild)" ] || [ ! -x "$(command -v gh)" ]; then
   printf "%s""$LRED""Packages are not installed!\n"
   
   # Detect package manager
