@@ -99,4 +99,8 @@ commit_hash=$(git rev-parse HEAD | cut -c1-7)
 commit_message=$(git log -1 --pretty=%B)
 
 # Release the build
-gh release create "$now" -t "$VERSION" --repo Max-Gouliaev/transgui-updated-releases -n "[$commit_message($commit_hash)](https://github.com/transmission-remote-gui/transgui/commit/$(git rev-parse HEAD))" ./Release/*
+if ! gh release create "$now" -t "$VERSION" --repo Max-Gouliaev/transgui-updated-releases -n "[$commit_message($commit_hash)](https://github.com/transmission-remote-gui/transgui/commit/$(git rev-parse HEAD))" ./Release/*; then
+  printf '%s\n' "${LRED}Failed to create release. Please check your access token and try again." >&2
+  exit 1
+fi
+exit 0
