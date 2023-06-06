@@ -14,7 +14,7 @@ printf "${LBLUE}""Which repository do you want to release to? example: example/t
 read repository
 
 # Check if the packages are installed
-if ! which git || ! which make || ! which tar || ! which lazbuild || ! which gh; then
+if ! which git > /dev/null || ! which make > /dev/null || ! which tar > /dev/null || ! which lazbuild > /dev/null || ! which gh > /dev/null; then
   printf "${LRED}""Packages are not installed!\n""${NONE}"
   
   # Detect package manager
