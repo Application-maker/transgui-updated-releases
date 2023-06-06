@@ -70,5 +70,8 @@ VERSION=$(echo $VERSION | sed "s/$lastdigit//g")
 VERSION="$VERSION$((lastdigit+1))"
 VERSION=""$VERSION" BETA"
 
+commit_hash=$(git rev-parse HEAD | cut -c1-7)
+commit_message=$(git log -1 --pretty=%B)
+
 # Release the build
-gh release create "$now" -t "$VERSION" --repo Max-Gouliaev/transgui-updated-releases ./Release/*
+gh release create "$now" -t "$VERSION" --repo Max-Gouliaev/transgui-updated-releases -n "[$commit_message($commit_hash)](https://github.com/transmission-remote-gui/transgui/commit/$(git rev-parse HEAD))" ./Release/*
