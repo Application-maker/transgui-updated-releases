@@ -4,7 +4,7 @@ now=$(date +%F)
 # Colors
 LRED='\033[1;31m'
 LGREEN='\033[1;32m'
-
+LBLUE='\033[1;34m'
 
 # Check if the packages are installed
 if ! which git || ! which make || ! which tar || ! which lazbuild || ! which gh; then
@@ -35,6 +35,15 @@ fi
 
 # Check the arguments
 if [ ! "$1" = --no-clone ] && [ ! "$1" = -nc ] && [ ! "$1" = --no-update ] && [ ! "$1" = -nu ]; then
+  # Check if the argument is empty
+  if [ ! -z "$1" ]; then
+    printf "%s""$LRED""Invalid argument!\n"
+    printf "%s""$LBLUE""Available arguments:\n"
+    printf "%s""$LBLUE""-nc(--no-clone) - do not clone the repository\n"
+    printf "%s""$LBLUE""-nu(--no-update) - same as above\n"
+    exit 1
+  fi
+  
   # Remove old reposirory files
   if [ -d "./transgui" ]; then
     rm -rf ./transgui
