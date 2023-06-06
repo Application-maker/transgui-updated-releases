@@ -33,7 +33,7 @@ if ! which git || ! which make || ! which tar || ! which lazbuild || ! which gh;
       sudo pacman -S --needed git make tar lazarus github-cli
     # Unknown
     else
-      printf "${LRED}""Could not detect the system type.\n"  "${LGREEN}" "Please install these packages: git, make, tar, lazarus, github-cli\n""${NONE}"
+      printf "${LRED}""Could not detect the system type.\n"  "${LGREEN}" "Please install the following packages on your system: git, make, tar, lazarus, github-cli\n""${NONE}"
       # pause until keypress
       read -n 1 -s -r -p "Press any key when you have installed these packages..."
     fi
@@ -77,7 +77,7 @@ fi
 if [ ! -d "/usr/lib/lazarus/default" ]; then
   if [ ! -d "/usr/lib/lazarus/" ]; then 
     printf "${LRED}""Lazarus default folder is not found!\n""${NONE}"
-    printf "${LRED}""Check if you have installed Lazarus properly!\n""${NONE}"
+    printf "${LRED}""Check if you have installed Lazarus properly and try to reinstall it!\n""${NONE}"
     exit 1
   else
     sed -i -e 's=/usr/lib/lazarus/default/=/usr/lib/lazarus/=g' ./transgui/setup/unix/build.sh
