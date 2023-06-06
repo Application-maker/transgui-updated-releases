@@ -63,6 +63,12 @@ cd ../../
 
 # Aknowledge version number
 VERSION=$(cat VERSION.txt)
+lastdigit=$(echo "$VERSION" | grep -oE '[^.]+$')
+# $Version without $lastdigit
+VERSION=$(echo $VERSION | sed "s/$lastdigit//g")
+
+VERSION="$VERSION$((lastdigit+1))"
+VERSION=""$VERSION" BETA"
 
 # Release the build
 gh release create "$VERSION" -t "$now" --repo Max-Gouliaev/transgui-updated-releases -n "" ./Release/*
