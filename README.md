@@ -4,5 +4,3 @@
 # WARNING!
 ## Windows version is NOT TESTED! USE AT YOUR OWN RISK!
 ### If it doesn't work properly create an issue
-#
-# NOW NOT A FORK!
