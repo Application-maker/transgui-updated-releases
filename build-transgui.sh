@@ -74,14 +74,14 @@ if [ ! -d "/usr/lib/lazarus/default" ]; then
   if [ ! -d "/usr/lib/lazarus/" ]; then 
     printf "${LRED}""Lazarus default folder is not found!\n""${NONE}"
     printf "${LRED}""Check if you have installed Lazarus properly!\n""${NONE}"
-    exit
+    exit 1
   else
     sed -i -e 's=/usr/lib/lazarus/default/=/usr/lib/lazarus/=g' ./transgui/setup/unix/build.sh
   fi
 fi
 
 # Build the application
-cd ./transgui/setup/unix || exit
+cd ./transgui/setup/unix || exit 1
 ./build.sh
 
 cd ../../
