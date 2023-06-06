@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e  # halt immediately on command failure
+
 now=$(date +%F)
 
 # Colors
