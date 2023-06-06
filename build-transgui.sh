@@ -73,13 +73,15 @@ else
   fi
 fi
 
-# Check the lazarus default folder
+# Check if Lazarus default folder exists
 if [ ! -d "/usr/lib/lazarus/default" ]; then
+  # Check if Lazarus directory exists
   if [ ! -d "/usr/lib/lazarus/" ]; then 
     printf "${LRED}""Lazarus default folder is not found!\n""${NONE}"
     printf "${LRED}""Check if you have installed Lazarus properly and try to reinstall it!\n""${NONE}"
     exit 1
   else
+    # Replace the default folder path with the actual path to Lazarus
     sed -i -e 's=/usr/lib/lazarus/default/=/usr/lib/lazarus/=g' ./transgui/setup/unix/build.sh
   fi
 fi
