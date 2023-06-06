@@ -86,8 +86,10 @@ fi
 
 # Build the application
 cd ./transgui/setup/unix || exit 1
-./build.sh
-
+if ! ./build.sh; then
+    printf "${LRED}""Build failed!\n""${NONE}"
+    exit 1
+fi
 cd ../../
 
 # Aknowledge version number
