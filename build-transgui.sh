@@ -42,6 +42,19 @@ if [ ! "$1" = --no-clone ] && [ ! "$1" = -nc ] && [ ! "$1" = --no-update ] && [ 
 
   # Clone the repository
   git clone https://github.com/transmission-remote-gui/transgui.git
+  if [ ! -d "./transgui" ]; then
+    printf "%s""$LRED""Could not clone the repository!\n"
+    exit 1
+  fi
+else
+  if [ ! -d "./transgui" ]; then
+    printf "%s""$LRED""Repository is not found!\n"
+    printf "%s""$LRED""The program will stop now!.\n"
+    printf "%s""$LRED""Because how would you expect for it to work without the repository?\n"
+    exit 1
+  else
+    printf "%s""$LGREEN""Using existing repository.\n"
+  fi
 fi
 
 # Check the lazarus default folder
