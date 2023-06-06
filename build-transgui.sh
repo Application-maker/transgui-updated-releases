@@ -7,7 +7,7 @@ LGREEN='\033[1;32m'
 
 
 # Check if the packages are installed
-if ! which git || ! which make || ! which tar || ! which lazbuild ] || ! which gh; then
+if ! which git || ! which make || ! which tar || ! which lazbuild || ! which gh; then
   printf "%s""$LRED""Packages are not installed!\n"
   
   # Detect package manager
