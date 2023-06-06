@@ -71,4 +71,4 @@ VERSION="$VERSION$((lastdigit+1))"
 VERSION=""$VERSION" BETA"
 
 # Release the build
-gh release create "$VERSION" -t "$now" --repo Max-Gouliaev/transgui-updated-releases -n "" ./Release/*
+gh release create "$now" -t "$VERSION" --repo Max-Gouliaev/transgui-updated-releases ./Release/*
