@@ -9,6 +9,10 @@ LGREEN='\033[1;32m'
 LBLUE='\033[1;34m'
 NONE='\033[0m'
 
+# Let user decide what repository they want to release to
+printf "${LBLUE}""Which repository do you want to release to? example: example/transgui (You have to be authorized to push to this repository)\n""${NONE}"
+read repository
+
 # Check if the packages are installed
 if ! which git || ! which make || ! which tar || ! which lazbuild || ! which gh; then
   printf "${LRED}""Packages are not installed!\n""${NONE}"
@@ -99,7 +103,7 @@ commit_hash=$(git rev-parse HEAD | cut -c1-7)
 commit_message=$(git log -1 --pretty=%B)
 
 # Release the build
-if ! gh release create "$now" -t "$VERSION" --repo Max-Gouliaev/transgui-updated-releases -n "[$commit_message($commit_hash)](https://github.com/transmission-remote-gui/transgui/commit/$(git rev-parse HEAD))" ./Release/*; then
+if ! gh release create "$now" -t "$VERSION" --repo "$repository" -n "[$commit_message($commit_hash)](https://github.com/transmission-remote-gui/transgui/commit/$(git rev-parse HEAD))" ./Release/*; then
   printf '%s\n' "${LRED}Failed to create release. Please check your access token and try again." >&2
   exit 1
 fi
