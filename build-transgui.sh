@@ -5,28 +5,29 @@ now=$(date +%F)
 LRED='\033[1;31m'
 LGREEN='\033[1;32m'
 LBLUE='\033[1;34m'
+NONE='\033[0m'
 
 # Check if the packages are installed
 if ! which git || ! which make || ! which tar || ! which lazbuild || ! which gh; then
-  printf "%s""$LRED""Packages are not installed!\n"
+  printf "%s""$LRED""Packages are not installed!\n""$NONE"
   
   # Detect package manager
   file=/etc/os-release
     # Debian
     if grep -q 'ID_LIKE=.*debian.*' "$file" || grep -q 'ID_LIKE=.*ubuntu.*' "$file"; then
-      printf "%s""$LGREEN""Detected Debian based system.\n"
+      printf "%s""$LGREEN""Detected Debian based system.\n""$NONE"
       sudo apt-get -y install git make tar lazarus github-cli
     # RPM-based
     elif grep -q 'ID_LIKE=.*centos.*' "$file" || grep -q 'ID_LIKE=.*fedora.*' "$file"; then
-      printf "%s""$LGREEN""Detected rpm based system.\n"
+      printf "%s""$LGREEN""Detected rpm based system.\n""$NONE"
       sudo yum -y install git make tar lazarus github-cli
     # Arch
     elif grep -q 'ID_LIKE=.*arch.*' "$file"; then
-      printf "%s""$LGREEN""Detected Arch based system.\n"
+      printf "%s""$LGREEN""Detected Arch based system.\n""$NONE"
       sudo pacman -S --needed git make tar lazarus github-cli
     # Unknown
     else
-      printf "%s""$LRED""Could not detect the system type.\n" "%s" "$LGREEN" "Please install these packages: git, make, tar, lazarus, github-cli\n"
+      printf "%s""$LRED""Could not detect the system type.\n" "%s" "$LGREEN" "Please install these packages: git, make, tar, lazarus, github-cli\n""$NONE"
       # pause until keypress
       read -n 1 -s -r -p "Press any key when you have installed these packages..."
     fi
@@ -37,10 +38,10 @@ fi
 if [ ! "$1" = --no-clone ] && [ ! "$1" = -nc ] && [ ! "$1" = --no-update ] && [ ! "$1" = -nu ]; then
   # Check if the argument is empty
   if [ ! -z "$1" ]; then
-    printf "%s""$LRED""Invalid argument!\n"
-    printf "%s""$LBLUE""Available arguments:\n"
-    printf "%s""$LBLUE""-nc(--no-clone) - do not clone the repository\n"
-    printf "%s""$LBLUE""-nu(--no-update) - same as above\n"
+    printf "%s""$LRED""Invalid argument!\n""$NONE"
+    printf "%s""$LBLUE""Available arguments:\n""$NONE"
+    printf "%s""$LBLUE""-nc(--no-clone) - do not clone the repository\n""$NONE"
+    printf "%s""$LBLUE""-nu(--no-update) - same as above\n""$NONE"
     exit 1
   fi
   
@@ -52,25 +53,25 @@ if [ ! "$1" = --no-clone ] && [ ! "$1" = -nc ] && [ ! "$1" = --no-update ] && [ 
   # Clone the repository
   git clone https://github.com/transmission-remote-gui/transgui.git
   if [ ! -d "./transgui" ]; then
-    printf "%s""$LRED""Could not clone the repository!\n"
+    printf "%s""$LRED""Could not clone the repository!\n""$NONE"
     exit 1
   fi
 else
   if [ ! -d "./transgui" ]; then
-    printf "%s""$LRED""Repository is not found!\n"
-    printf "%s""$LRED""The program will stop now!.\n"
-    printf "%s""$LRED""Because how would you expect for it to work without the repository?\n"
+    printf "%s""$LRED""Repository is not found!\n""$NONE"
+    printf "%s""$LRED""The program will stop now!.\n""$NONE"
+    printf "%s""$LRED""Because how would you expect for it to work without the repository?\n""$NONE"
     exit 1
   else
-    printf "%s""$LGREEN""Using existing repository.\n"
+    printf "%s""$LGREEN""Using existing repository.\n""$NONE"
   fi
 fi
 
 # Check the lazarus default folder
 if [ ! -d "/usr/lib/lazarus/default" ]; then
   if [ ! -d "/usr/lib/lazarus/" ]; then 
-    printf "%s""$LRED""Lazarus default folder is not found!\n"
-    printf "%s""$LRED""Check if you have installed Lazarus properly!\n"
+    printf "%s""$LRED""Lazarus default folder is not found!\n""$NONE"
+    printf "%s""$LRED""Check if you have installed Lazarus properly!\n""$NONE"
     exit
   else
     sed -i -e 's=/usr/lib/lazarus/default/=/usr/lib/lazarus/=g' ./transgui/setup/unix/build.sh
