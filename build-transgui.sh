@@ -18,17 +18,17 @@ if ! which git || ! which make || ! which tar || ! which lazbuild || ! which gh;
   printf "${LRED}""Packages are not installed!\n""${NONE}"
   
   # Detect package manager
-  file=/etc/os-release
+  os_release=/etc/os-release
     # Debian
-    if grep -q 'ID_LIKE=.*debian.*' "$file" || grep -q 'ID_LIKE=.*ubuntu.*' "$file"; then
+    if grep -q 'ID_LIKE=.*debian.*' "$os_release" || grep -q 'ID_LIKE=.*ubuntu.*' "$os_release"; then
       printf "${LGREEN}""Detected Debian based system.\n""${NONE}"
       sudo apt-get -y install git make tar lazarus github-cli
     # RPM-based
-    elif grep -q 'ID_LIKE=.*centos.*' "$file" || grep -q 'ID_LIKE=.*fedora.*' "$file"; then
+    elif grep -q 'ID_LIKE=.*centos.*' "$os_release" || grep -q 'ID_LIKE=.*fedora.*' "$os_release"; then
       printf "${LGREEN}""Detected rpm based system.\n""${NONE}"
       sudo yum -y install git make tar lazarus github-cli
     # Arch
-    elif grep -q 'ID_LIKE=.*arch.*' "$file"; then
+    elif grep -q 'ID_LIKE=.*arch.*' "$os_release"; then
       printf "${LGREEN}""Detected Arch based system.\n""${NONE}"
       sudo pacman -S --needed git make tar lazarus github-cli
     # Unknown
