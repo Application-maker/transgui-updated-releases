@@ -15,11 +15,11 @@ if ! which git || ! which make || ! which tar || ! which lazbuild ] || ! which g
     # Debian
     if grep -q 'ID_LIKE=.*debian.*' "$file" || grep -q 'ID_LIKE=.*ubuntu.*' "$file"; then
       printf "%s""$LGREEN""Detected Debian based system.\n"
-      apt-get -y install git make tar lazarus github-cli
+      sudo apt-get -y install git make tar lazarus github-cli
     # RPM-based
     elif grep -q 'ID_LIKE=.*centos.*' "$file" || grep -q 'ID_LIKE=.*fedora.*' "$file"; then
       printf "%s""$LGREEN""Detected rpm based system.\n"
-      yum -y install git make tar lazarus github-cli
+      sudo yum -y install git make tar lazarus github-cli
     # Arch
     elif grep -q 'ID_LIKE=.*arch.*' "$file"; then
       printf "%s""$LGREEN""Detected Arch based system.\n"
