@@ -90,7 +90,7 @@ cd ../../
 VERSION=$(cat VERSION.txt)
 lastdigit=$(echo "$VERSION" | grep -oE '[^.]+$')
 # $Version without $lastdigit
-VERSION=$(echo $VERSION | sed "s/$lastdigit//g")
+VERSION="${VERSION%${lastdigit}}"
 
 VERSION="$VERSION$((lastdigit+1))"
 VERSION=""$VERSION" BETA"
