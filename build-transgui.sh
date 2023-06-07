@@ -58,18 +58,21 @@ if (( "${#missing_packages[@]}" > 0 )); then
 fi
 
 
+# Help function
+help() {
+  printf "${LBLUE}""Available arguments:\n""${NONE}"
+  printf "${LBLUE}""-nc(--no-clone) - do not clone the repository\n""${NONE}"
+  printf "${LBLUE}""-nu(--no-update) - same as above\n""${NONE}"
+  printf "${LBLUE}""-r(--repository) - repository name (e.g. example/transgui)\n""${NONE}"
+}
+
 # Parse command-line arguments
 while [[ "$#" -gt 0 ]]; do
   case $1 in
     -nc|--no-clone) no_clone=true ;;
     -nu|--no-update) no_update=true ;;
     -r|--repository) repository="$2"; shift ;;
-    *) echo "Unknown parameter passed: $1";
-    printf "${LBLUE}""Available arguments:\n""${NONE}"
-    printf "${LBLUE}""-nc(--no-clone) - do not clone the repository\n""${NONE}"
-    printf "${LBLUE}""-nu(--no-update) - same as above\n""${NONE}"
-    printf "${LBLUE}""-r(--repository) - repository name (e.g. example/transgui)\n""${NONE}"
-    exit 1 ;;
+    *) echo "Unknown parameter passed: $1"; help; exit 1 ;;
   esac
   shift
 done
