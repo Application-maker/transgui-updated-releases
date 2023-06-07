@@ -9,29 +9,51 @@ LGREEN='\033[1;32m'
 LBLUE='\033[1;34m'
 NONE='\033[0m'
 
-# Check if the packages are installed
-if ! which git > /dev/null || ! which make > /dev/null || ! which tar > /dev/null || ! which lazbuild > /dev/null || ! which gh > /dev/null; then
-  printf "${LRED}""Packages are not installed!\n""${NONE}"
-  
-  # Detect package manager
-  os_release=/etc/os-release
-    # Debian
-    if grep -q 'ID_LIKE=.*debian.*' "$os_release" || grep -q 'ID_LIKE=.*ubuntu.*' "$os_release"; then
-      printf "${LGREEN}""Detected Debian based system.\n""${NONE}"
-      sudo apt-get -y install git make tar lazarus github-cli
-    # RPM-based
-    elif grep -q 'ID_LIKE=.*centos.*' "$os_release" || grep -q 'ID_LIKE=.*fedora.*' "$os_release"; then
-      printf "${LGREEN}""Detected rpm based system.\n""${NONE}"
-      sudo yum -y install git make tar lazarus github-cli
-    # Arch
-    elif grep -q 'ID_LIKE=.*arch.*' "$os_release"; then
-      printf "${LGREEN}""Detected Arch based system.\n""${NONE}"
-      sudo pacman -S --needed git make tar lazarus github-cli
-    # Unknown
+# Check if the necessary packages are installed
+packages=("git" "make" "tar" "github-cli" "lazarus")
+
+# Map package names to their corresponding commands
+declare -A package_commands
+package_commands["git"]="git"
+package_commands["make"]="make"
+package_commands["tar"]="tar"
+package_commands["github-cli"]="gh"
+package_commands["lazarus"]="lazbuild"
+
+missing_packages=()
+for pkg in "${packages[@]}"; do
+    # check if package is installed and save it to missing_packages list if not
+    if ! command -v "${package_commands[$pkg]}" > /dev/null; then
+        missing_packages+=("$pkg")
+    fi
+done
+
+if (( "${#missing_packages[@]}" > 0 )); then 
+    if which apt-get > /dev/null 2>&1; then
+        # Debian-based package manager
+        printf "${LGREEN}""Detected Debian based system. Installing required packages...\n""${NONE}"
+        if ! sudo apt-get update && sudo apt-get -y install "${missing_packages[@]}"; then
+            printf "${LRED}""Failed to install packages. Please investigate and try again.""${NONE}" >&2
+            exit 1
+        fi
+    elif which yum > /dev/null 2>&1; then
+        # Redhat-based package manager
+        printf "${LGREEN}""Detected Red Hat based system. Installing required packages...\n""${NONE}"
+        if ! sudo yum -y install "${missing_packages[@]}"; then
+            printf "${LRED}""Failed to install packages. Please investigate and try again.""${NONE}" >&2
+            exit 1
+        fi
+    elif which pacman > /dev/null 2>&1; then
+        # Arch Linux package manager
+        printf "${LGREEN}""Detected Arch Linux based system. Installing required packages...\n""${NONE}"
+        if ! sudo pacman -S --needed "${missing_packages[@]}"; then
+            printf "${LRED}""Failed to install packages. Please investigate and try again.""${NONE}" >&2
+            exit 1
+        fi
     else
-      printf "${LRED}""Could not detect the system type.\n"  "${LGREEN}" "Please install the following packages on your system: git, make, tar, lazarus, github-cli\n""${NONE}"
-      # pause until keypress
-      read -n 1 -s -r -p "Press any key when you have installed these packages..."
+        # Unable to detect a package manager
+        printf "${LRED}""Could not detect package manager! Please install the following packages on your system: ${missing_packages[*]}""${NONE}" >&2
+        exit 1
     fi
 fi
 
