@@ -9,10 +9,6 @@ LGREEN='\033[1;32m'
 LBLUE='\033[1;34m'
 NONE='\033[0m'
 
-# Let user decide what repository they want to release to
-printf "${LBLUE}""Which repository do you want to release to? example: example/transgui (You have to be authorized to push to this repository)\n""${NONE}"
-read repository
-
 # Check if the packages are installed
 if ! which git > /dev/null || ! which make > /dev/null || ! which tar > /dev/null || ! which lazbuild > /dev/null || ! which gh > /dev/null; then
   printf "${LRED}""Packages are not installed!\n""${NONE}"
@@ -40,37 +36,38 @@ if ! which git > /dev/null || ! which make > /dev/null || ! which tar > /dev/nul
 fi
 
 
-# Check the arguments
-if [ ! "$1" = --no-clone ] && [ ! "$1" = -nc ] && [ ! "$1" = --no-update ] && [ ! "$1" = -nu ]; then
-  # Check if the argument is empty
-  if [ ! -z "$1" ]; then
-    printf "${LRED}""Invalid argument!\n""${NONE}"
+# Parse command-line arguments
+while [[ "$#" -gt 0 ]]; do
+  case $1 in
+    -nc|--no-clone) no_clone=true ;;
+    -nu|--no-update) no_update=true ;;
+    -r|--repository) repository="$2"; shift ;;
+    *) echo "Unknown parameter passed: $1";
     printf "${LBLUE}""Available arguments:\n""${NONE}"
     printf "${LBLUE}""-nc(--no-clone) - do not clone the repository\n""${NONE}"
     printf "${LBLUE}""-nu(--no-update) - same as above\n""${NONE}"
-    exit 1
-  fi
-  
-  # Remove old reposirory files
-  if [ -d "./transgui" ]; then
-    rm -rf ./transgui
-  fi
+    printf "${LBLUE}""-r(--repository) - repository name (e.g. example/transgui)\n""${NONE}"
+    exit 1 ;;
+  esac
+  shift
+done
 
-  # Clone the repository
-  git clone https://github.com/transmission-remote-gui/transgui.git
-  if [ ! -d "./transgui" ]; then
+# Prompt user for repository if not passed as an argument
+if [ -z "$repository" ]; then
+  read -p "Enter the repository name (e.g. example/transgui): " repository
+fi
+
+# Clone or update repository
+if [ "$no_clone" = true ] && [ -d "./transgui" ]; then
+  printf "${LGREEN}""Skipping cloning repository"
+elif [ ! -d "./transgui" ] || [ "$no_update" = true ]; then
+  echo "Cloning repository"
+  if ! git clone https://github.com/transmission-remote-gui/transgui.git; then
     printf "${LRED}""Could not clone the repository!\n""${NONE}"
-    exit 1
   fi
 else
-  if [ ! -d "./transgui" ]; then
-    printf "${LRED}""Repository is not found!\n""${NONE}"
-    printf "${LRED}""The program will stop now!.\n""${NONE}"
-    printf "${LRED}""Because how would you expect for it to work without the repository?\n""${NONE}"
-    exit 1
-  else
-    printf "${LGREEN}""Using existing repository.\n""${NONE}"
-  fi
+  printf "${LGREEN}""Updating repository"
+  cd ./transgui && git pull && cd -
 fi
 
 # Check if Lazarus default folder exists
